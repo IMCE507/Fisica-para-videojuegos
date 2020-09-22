@@ -1,0 +1,179 @@
+// E1.1.cpp : Este archivo contiene la función "main". La ejecución del programa comienza y termina ahí.
+//
+
+
+//Inclusion de librerias necesarias para el programa 
+#include <iostream>
+#include <vector> 
+#include <chrono>
+#include <thread>
+
+using namespace std;
+using namespace std::this_thread;
+using namespace std::chrono;
+
+
+int main()
+{
+	srand(time(0));
+
+	//Declaracion de espacios maximos de cada inventarios 
+	const int LeafInventorySpaceMax = 5;
+	const int MetalInventorySpaceMax = 3;
+
+	//Declaracion de Espacios ocupados en los inventarios
+	int LeafInventoryOccupied = 0;
+	int MetalInventoryOccupied = 0;
+
+	//Creacion de inventarios
+	vector<string> LeafInventory;
+	vector<string> MetalInventory;
+
+	//Creacion de posibles elementos.
+	vector<string> Leaf{ "Verila Pluma (VP)", "Secta Doralis (SD)", "Crystalia Fulminis (CF)" };
+	vector<string> Metals{ "Cristal Azul (A)", "Cristal Verde (V)" };
+
+	//Declaracion de variable que almacena el input del usuario
+	string input = "";
+
+	//Declaracion de variable que indica el mineral y hoja escogida por el randomizer 
+	int RandomLeaf;
+	int RandomMetal;
+
+	//declaracion de posiciones minimos y maximos de los randoms
+	//Metals 
+	const int MetalsMin = 0;
+	const int MetalsMax = Metals.size() - 1;
+
+	//Leafs
+	const int LeafMin = 0;
+	const int LeafMax = Leaf.size() - 1;
+
+
+
+	while (input != "0" && input != "exit")
+	{
+		//Limpia la pantalla cada nueva iteracion
+		system("cls");
+
+		//Menu de opciones
+		cout << "Minar (M)" << endl;
+		cout << "Recoger hojas (H)" << endl;
+		cout << "Ver inventario (I)" << endl;
+		cout << "Salir (0)" << endl << endl;
+
+		//separador (solo es estetica)
+		cout << "*************************************************************" << endl;
+		//Lectura del input del usuario
+		cout << "Esperando entrada: "; cin >> input;
+		//System cls limpia la pantalla, cosas de estetica
+		system("cls");
+
+		//Dependiendo del input iniciara una de las siguientes condiciones
+		if (input == "M" || input == "m")  //Minar
+		{
+			if (MetalInventoryOccupied < MetalInventorySpaceMax)
+			{
+				cout << "Minando . ";
+				sleep_for(milliseconds(500));//Esperara 500 milisegundos para despues seguir con la siguiente linea
+				cout << ". ";
+				sleep_for(milliseconds(500));
+				cout << ".\n\n";
+
+				RandomMetal = rand() % (MetalsMax - MetalsMin + 1) + MetalsMin;//Creacion de numero random 
+
+				cout << "Metal obtenido: " << Metals[RandomMetal] << endl << endl;
+				MetalInventoryOccupied++;//Aumentar la cantidad de espacios ocupados
+				MetalInventory.push_back(Metals[RandomMetal]);//Agregar Metal al inventario
+
+			}
+			else
+			{
+				cout << "Inventario de metales lleno." << endl << endl;
+			}
+
+			//El programa no avanza hasta que el usuario toque una tecla (mas estetica)
+			system("pause");
+		}
+		else  if (input == "H" || input == "h")  //Recoger hojas, mismo proceso que minar
+		{
+			if (LeafInventoryOccupied < LeafInventorySpaceMax)
+			{
+				cout << "Recogiendo . ";
+				sleep_for(milliseconds(500));
+				cout << ". ";
+				sleep_for(milliseconds(500));
+				cout << ".\n\n";
+
+				RandomLeaf= rand() % (LeafMax - LeafMin + 1) + LeafMin;
+
+				cout << "Hoja recogida: " << Leaf[RandomLeaf] << endl << endl;
+				LeafInventoryOccupied++;
+				LeafInventory.push_back(Leaf[RandomLeaf]);
+
+			}
+			else
+			{
+				cout << "Inventario de hojas lleno." << endl << endl;
+			}
+
+			system("pause");
+		}
+		else if (input == "I" || input == "i")
+		{
+			cout << "Abriendo inventarios . ";
+			sleep_for(milliseconds(500));
+			cout << ". ";
+			sleep_for(milliseconds(500));
+			cout << ".\n\n";
+
+			if (LeafInventoryOccupied == 0 && MetalInventoryOccupied == 0)
+			{
+				cout << "Inventarios Vacios" << endl << endl;
+
+			}
+			else {
+				
+				cout << "HOJAS" << endl << endl;
+				
+				if (LeafInventoryOccupied == 0)
+				{
+					cout << "Inventario de hojas vacio" << endl << endl;
+				}
+				else
+				{
+					for (int i = 0; i < LeafInventory.size(); i++)
+					{
+						cout << LeafInventory[i] << endl;
+					}
+				}
+
+				cout << endl << endl;
+
+				cout << "METALES" << endl << endl;
+
+				if (MetalInventoryOccupied == 0)
+				{
+					cout << "Inventario de metales vacio" << endl << endl;
+				}
+				else
+				{
+					for (int i = 0; i < MetalInventory.size(); i++)
+					{
+						cout << MetalInventory[i] << endl;
+					}
+				}
+
+				cout << endl;
+			}
+			system("pause");
+
+		}
+
+
+
+
+	}
+
+}
+
