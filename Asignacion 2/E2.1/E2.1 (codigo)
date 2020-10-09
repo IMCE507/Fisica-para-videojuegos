@@ -1,0 +1,63 @@
+#include <iostream>
+
+using namespace std;
+
+void magicalChange(int* x, int* y)
+{
+	int z;
+	z = *x;
+	*x = *y;
+	*y = z;
+}
+
+int main()
+{
+	// Declaración de variables generales.
+	int a = 45;
+	int b = -15;
+	int c = 7;
+	int d = -9;
+	int K1 = 21;
+	int K2 = -1;
+	int K3 = K1 - K2;
+
+	// Declaración de punteros.
+	int* p1, * p2, * p3, * p4, * kp;
+
+	// Parte 1.
+	p1 = &a;
+	p2 = &b;
+	p3 = &c;
+	kp = &K3;
+	cout << *p1 << " " << *p2 << " " << *p3 << endl; //¿Qué imprime?
+
+	// Parte 2.
+	p1 = &K1;
+	p2 = &d;
+	p3 = &K2;
+	kp = &K3;
+	cout << *p1 << " " << *p2 << " " << *p3 << endl; //¿Qué imprime?
+
+	// Parte 3.
+	p1 = p2;
+	p3 = &c;
+	*p2 = 5;
+	cout << *p1 << " " << *p2 << " " << *p3 << endl; //¿Qué imprime?
+
+	// Parte 4.
+	p2 = p3;
+	kp = p1;
+	*p1 = -10;
+	cout << *p1 << " " << *p2 << " " << *p3 << endl; //¿Qué imprime?
+
+	// Parte 5.
+	magicalChange(p1, p3);
+	cout << *p1 << " " << *p2 << " " << *p3 << endl; //¿Qué imprime?
+
+	// Parte 6.
+	*p1 = (K2 - K1) * (-2);
+	p2 = &b;
+	p3 = kp;
+	magicalChange(p2, kp);
+	cout << *p1 << " " << *p2 << " " << *p3 << endl; //¿Qué imprime?
+}
