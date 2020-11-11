@@ -1,0 +1,161 @@
+#include "Inventario.h"
+
+
+void Inventario::GenerateInventory()
+{
+	int counter = 0; //
+	const int Numero_Objetos_Generados = 7; //Constate que indica la cantidad de objetos que se generaran
+	Inventory.clear(); //"Limpia" el inventario o borra todo el contenido
+
+
+	//Creamos el ciclo que llena el inventario.
+	while (counter < Numero_Objetos_Generados) //Un iterador que hace loop hasta que el counter llegue al numero de la constante "Numero_Objetos_Generados"
+	{
+		int RandomNumber = rand() % Items.size(); //Generar numero random de 0 a 1
+
+		Inventory.push_back(Items[RandomNumber]); //Agregar el objeto seleccionado al inventario
+
+		counter++; //Aumentar el counter para que el loop continue
+	}
+
+	system("CLS"); //Limpiar la display
+	cout << "INVENTORY GENERATED! \n\n" << endl;
+	system("pause"); //Para esperar que el usuario presione alguna tecla. 
+
+
+}
+
+void Inventario::openInventory() 
+{
+	//Declaramos la variable que mantiene el inventario abierto. 
+	bool inventoryOpened = true;
+
+	//Declaramos la variable para la entrada del usuario. 
+	int userInput;
+
+	//Creamos el ciclo que nos mantiene el inventario abierto. 
+	while (inventoryOpened) {
+
+		//Encabezado. 
+		system("CLS");
+		cout << "===============================================================" << endl;
+		cout << "= = INVENTORY = =" << "\n" << endl;
+
+		//Creamos el ciclo que itera sobre el inventario para imprimirlo (mostrarlo en pantalla).
+		for (int counter = 0; counter < Inventory.size(); counter++)
+		{
+			cout << counter + 1 << ". " << Inventory[counter] << endl;
+		}
+
+		//Creamos la opci�n EXIT.
+		cout << endl << "0. EXIT" << endl;
+		cout << "===============================================================" << endl;
+
+		//Esperamos la entrada del usuario.
+		cout << "AWAITING USER INPUT:  "; cin >> userInput;
+
+		//Si el usuario introduce el n�mero de alg�n item, entonces borra el item usando erase(). De otra forma, cierra el inventory. 
+		if (userInput <= Inventory.size() && userInput > 0)
+		{
+			Inventory.erase(Inventory.begin() + userInput - 1);
+		}
+		else if (userInput == 0) {
+
+			inventoryOpened = false;
+		}
+
+	}
+}
+
+//Funcion encargada de desplegar el menu de recoleccion, etc...
+void Inventario::recoleccion()
+{
+	const int Numero_Objetos_Recoleccion = 5; //Constante que indica la cantidad de objetos que se desplegaran en el menu de recoleccion
+
+	bool RecoleccionMenu = true;// boolean que indica cuando se cierra el menu
+	int input;//Variable que almacena el input del usuario para seleccionar el objeto del menu
+	
+	vector<string> RandomList;//Lista de los objetos seleccionados para esta instancia del menu de recoleccion
+
+	//Seleccion de los objetos de la lista "RandomList"
+	for (int i = 0; i < Numero_Objetos_Recoleccion; i++)
+	{
+		int RandomObj = rand() % RecolectionItems.size();//Genera un numero random. En este caso del 0 a 1
+		RandomList.push_back(RecolectionItems[RandomObj]);//Agrega el "objeto " a Randomlist de la lista "RecolectionItems"
+	}
+
+
+	while (RecoleccionMenu)//Loop para mantener el menu abierto
+	{
+
+		system("cls"); //Limpiamos el display 
+
+		//Impresion del titulo y los objetos de RandomList
+		cout << "HARVESTING" << endl << endl;
+		for (int i = 0; i < RandomList.size(); i++)
+			cout << i + 1 << ". " << RandomList[i] << endl;
+
+		cout << endl << "0. Exit " << endl << endl;
+		cout << "Inventory space: " << Inventory.size() << " of " << InventoryMax << endl << endl; //Impresion de la cantidad maxima del inventario vs la cantidad actual
+		cout << "Waiting input: "; cin >> input; //A la espera del input del usuario
+
+		if (input == 0)//Condicion para cerrar el menu. 
+		{
+			RecoleccionMenu = false;//Si el usuario elije 0, el menu de recoleccion cerrara
+		}
+		else if (input <= RandomList.size() && input > 0)
+		{
+			if (Inventory.size() >= InventoryMax)//condicion para verificar el si hay espacio en el inventario
+			{
+				system("cls");
+				cout << "INVENTORY FULL." << endl << endl; //Si no hay espacio en el inventario , imprime este mensaje
+				system("pause");
+			}
+			else 
+			{
+				//Si hay espacio en el inventario
+
+				int Probability = rand() % 100 + 1;//Una variable que genera un numero del 1 al 100. Este numero es la probabilidad de que las rocas se tomen exitosamente.
+
+				if (RandomList[input - 1] == "Roca Magica")//La roca magica tiene una probabilidad del 50/50 de ser tomada exitosamente
+				{
+					if (Probability <= 50)//Si el numero generado (Probability) es menor o igual a 50, entonces se agrega al inventario, despliega el mensaje de exito  y elimina el objeto del menu de recoleccion
+					{
+						cout << "Roca recogida exitosamente";
+						Inventory.push_back(RandomList[input - 1]);
+						RandomList.erase(RandomList.begin() + input - 1);
+					}
+					else//Si el numero generado (Probability) es mayor a 50, entonces se elimina del menu de recoleccion y despliega el mensaje de error
+					{
+						cout << "La roca se ha desmoronado";
+						RandomList.erase(RandomList.begin() + input - 1);
+					}
+				}
+				else
+				{
+					//Las otras rocas tienen una probabilidad de 75% de exito y 25% de desmonorarse 
+					if (Probability <= 75)//Si el numero generado (Probability) es menor o igual a 75, entonces se agrega al inventario, despliega el mensaje de exito  y elimina el objeto del menu de recoleccion
+					{
+						cout << "Roca recogida exitosamente";
+						Inventory.push_back(RandomList[input - 1]);
+						RandomList.erase(RandomList.begin() + input - 1);
+					}
+					else//Si el numero generado (Probability) es mayor a 75, entonces se elimina del menu de recoleccion y despliega el mensaje de error
+					{
+						cout << "La roca se ha desmoronado";
+						RandomList.erase(RandomList.begin() + input - 1);
+					}
+					//Se ve que el codigo es algo redundante, pero funciona.
+				}
+
+				_getch();
+			}
+
+		}
+
+	}
+
+
+
+
+}
