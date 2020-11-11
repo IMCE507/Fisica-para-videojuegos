@@ -1,0 +1,109 @@
+// Password Generator.cpp : Este archivo contiene la función "main". La ejecución del programa comienza y termina ahí.
+//
+
+#include <iostream>
+#include<conio.h>
+#include "Password.h"
+
+using namespace std;
+
+
+
+void IngresarPass(bool& PasswordOK, Password& pass)
+{
+	string clave;
+
+	cout << "INGRESAR CLAVE" << endl << endl;
+	cout << "Por favor ingrese la clave: ";
+	cin >> clave;
+	cout << endl;
+
+	if (pass.PasswordVerification(clave))
+	{
+		cout << "CLAVE CORRECTA.";
+		PasswordOK = true;
+		_getch();
+	}
+	else
+	{
+		cout << "CLAVE INCORRECTA.";
+		_getch();
+	}
+
+}
+
+
+void GenerarClave(Password& pass)
+{
+
+	cout << "GENERAR CLAVE" << endl << endl;
+	cout << "Presione una tecla para generar la clave." << endl << endl;
+	_getch();
+	pass.GeneratePassword();
+	cout << "Su clave es: " + pass.ShowPassword() << endl << endl;
+	system("pause");
+
+}
+
+void VerClave(Password pass)
+{
+	cout << "VER CLAVE" << endl << endl;
+	cout << "Su clave es: " + pass.ShowPassword() << endl << endl;
+	system("pause");
+
+}
+
+
+
+
+
+
+
+int main()
+{
+	srand(time(NULL));
+	bool PasswordOk = false;
+	Password pass;
+	int Opcion;
+
+
+	do {
+		cout << "1. Ingresar Clave." << endl;
+		cout << "2. Generar Clave." << endl;
+		cout << "3. Ver Clave." << endl << endl;
+
+		cout << "Opcion: ";
+		cin >> Opcion;
+
+		system("CLS");
+
+		switch (Opcion)
+		{
+
+		case 1:
+			IngresarPass(PasswordOk, pass);
+			break;
+
+		case 2:
+			GenerarClave(pass);
+			break;
+
+		case 3:
+			VerClave(pass);
+			break;
+
+		default:
+			cout << "Opcion invalida...";
+			break;
+		}
+		system("CLS");
+
+	} while (!PasswordOk);
+
+
+
+}
+
+
+
+
