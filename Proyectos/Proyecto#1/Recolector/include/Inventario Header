@@ -1,0 +1,23 @@
+#pragma once
+#include <iostream>
+#include <vector>
+#include <conio.h>
+using namespace std;
+
+
+//Clase que se encarca del los metodos del inventario
+class Inventario
+{
+	int const InventoryMax = 20; //Numero de espacios maximos en el inventario
+	vector<string> Inventory; //El inventario. Aqui se almacena todos los objetos recolectados y generados.
+
+	const vector<string> Items = { "Hierba Mala (HM)","Gusano Dorado (GD)" }; // Un vector con los objetos que se generan del "GenerateInventory"
+	const vector<string> RecolectionItems = { "Roca Blanda", "Roca Dura", "Roca Cristalina", "Roca Magica " }; // Un vector con los objetos del menu de recoleccion.
+
+public:
+	void openInventory(); //Metodo para ver los objetos del Invetario.
+	void recoleccion();// Metodo para ver y recolectar los objetos del vector "RecolectionItems"
+	void GenerateInventory(); // Metodo para generar y agregar al inventario los objetos del vector "Items"
+
+};
+
