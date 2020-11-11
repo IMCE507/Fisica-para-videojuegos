@@ -1,0 +1,74 @@
+// Recolector.cpp : Este archivo contiene la función "main". La ejecución del programa comienza y termina ahí.
+//
+
+#include <iostream>
+#include "Inventario.h"
+
+using namespace std;
+
+
+int main()
+{
+	//Creamos una instancia de la clase "Inventario" que hace referencia a nuestro inventario.
+	Inventario inv;
+
+
+	//Creamos una variable bool para mantener el menú funcionando. 
+	bool menuOpen = true;
+
+	//Creamos la variable para la entrada del usuario. 
+	int mainMenuOption;
+
+	//Usamos un ciclo while para mantener el menú funcionando. 
+	while (menuOpen) {
+
+		//Este comando limpia la ventana de comandos. 
+		system("CLS");
+
+		//Creamos el "UI" para el menú.
+		cout << "===============================================================" << endl;
+		cout << "= = MAIN MENU = =" << "\n" << endl;
+		cout << "1. INVENTORY GENERATOR (FOR DEVELOPERS)" << endl;
+		cout << "2. OPEN INVENTORY" << endl;
+		cout << "3. HARVEST ITEM" << endl;
+		cout << "4. EXIT GAME" << endl;
+		cout << "===============================================================" << endl;
+
+		//Leemos la entrada del usuario. 
+		cout << "AWAITING USER INPUT:  "; cin >> mainMenuOption;
+
+		//Usamos un switch() para manejar el menú con la entrada del usuario.
+		switch (mainMenuOption) {
+
+		case 1:
+			inv.GenerateInventory();
+			break;
+
+		case 2:
+			inv.openInventory();
+			break;
+
+		case 3:
+			inv.recoleccion();
+			break;
+
+		case 4:
+			menuOpen = false;
+			break;
+
+		default:
+			system("CLS");
+			break;
+
+		}
+
+
+	}
+
+	return 0;
+
+
+
+
+}
+
