@@ -10,6 +10,8 @@ const float ANGULO = 20.0f;
 const float PI = 3.141592653589793f;
 const float LONGITUD_CUERDA = 100.0f;
 
+float positionX;
+float positionY;
 float theta;
 
 
@@ -83,12 +85,13 @@ void Simulation::update(float dt)
 
 	theta = ANGULO / 180.0f * PI * cos(sqrtf(150 / LONGITUD_CUERDA) * timeCount);
 
-
+	positionX = asteroid2Body.position.x + LONGITUD_CUERDA * sin(theta);
+	positionY = asteroid2Body.position.y + LONGITUD_CUERDA * cos(theta);
 
 
 
 	asteroid->update(asteroidBody.position.x - 10, asteroidBody.position.y - 10, 20, 20);
-	asteroid2->update(asteroid2Body.position.x + LONGITUD_CUERDA * sin(theta) - 16, asteroid2Body.position.y + LONGITUD_CUERDA * cos(theta) - 16, 32, 32);
+	asteroid2->update(positionX - 16, positionY - 16, 32, 32);
 
 }
 
@@ -105,7 +108,7 @@ void Simulation::render()
 	SDL_RenderDrawLine(renderer, 0, 200, 1280, 200);
 
 	SDL_SetRenderDrawColor(renderer, 236, 88, 88, SDL_ALPHA_OPAQUE);
-	SDL_RenderDrawLine(renderer, 640, 200, 640, asteroid2Body.position.y);
+	SDL_RenderDrawLine(renderer, 640, 200, positionX, positionY);
 
 	asteroid->render();
 	asteroid2->render();
