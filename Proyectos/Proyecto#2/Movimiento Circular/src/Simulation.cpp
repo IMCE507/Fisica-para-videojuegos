@@ -76,6 +76,9 @@ void Simulation::handleEvents()
 void Simulation::update(float dt)
 {
 	timeCount += dt;
+	/*Al cambiar los radios de los asteroides, se puede ver la distancia de separacion en el eje en que esta girando el asteroide. Entre mayor es el radio mas grande la distancia de separacion.*/
+	/*Al cambiar ambas frecuencias angulares (X y Y), el objeto cambia su velocidad. Entre mayor es la frecuencia, mayor es la velocidad. Si cambias la frecuencia en un solo eje, el movimiento circular se pierde.*/
+
 	asteroid->update(asteroidBody.position.x - 50, asteroidBody.position.y - 50, 100, 100);
 	asteroid2->update(asteroid2Body.position.x + 100 * cos(0.7 * timeCount) - 10, asteroid2Body.position.y + 100 * sin(0.7 * timeCount) - 10, 20, 20);
 	asteroid3->update(asteroid3Body.position.x + 200 * cos(0.6 * timeCount) - 20, asteroid3Body.position.y + 200 * sin(0.6 * timeCount) - 20, 40, 40);

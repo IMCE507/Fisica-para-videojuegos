@@ -78,7 +78,11 @@ void Simulation::handleEvents()
 void Simulation::update(float dt)
 {
 	timeCount += dt;
-	asteroid->update(asteroidBody.position.x + 350 * cos(10 * timeCount) - 50, asteroidBody.position.y - 50, 100, 100);
+
+	/* Al aumentar la amplitud de los asteroides, mayor es la longitud en la que se desplazan. Al bajar la amplitud, menor es distancia que viajan, en ambas direccines. */
+	/*Al aumentar la frecuencia angular, mayor es la velocidad en como se mueven los asteroides. Al bajar la frecuencia, menor es la velocidad*/
+
+	asteroid->update(asteroidBody.position.x + 100 * cos(10 * timeCount) - 50, asteroidBody.position.y - 50, 100, 100);
 	asteroid2->update(asteroid2Body.position.x + 350 * cos(3 * timeCount) - 50, asteroid2Body.position.y - 50, 100, 100);
 	asteroid3->update(asteroid3Body.position.x + 350 * cos(1 * timeCount) - 50, asteroid3Body.position.y - 50, 100, 100);
 	asteroid4->update(asteroid4Body.position.x - 50, asteroid4Body.position.y + 350 * sin(2 * timeCount) - 50, 100, 100);
